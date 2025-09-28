@@ -21,6 +21,10 @@ public class ByteMaskVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         var length = text.length();
         for (var i = 0; i < length; i++) {
             var c = text.charAt(i);

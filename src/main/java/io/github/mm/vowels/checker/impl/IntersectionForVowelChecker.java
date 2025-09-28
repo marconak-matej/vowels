@@ -12,6 +12,10 @@ public class IntersectionForVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         var textChars = new HashSet<>();
 
         for (var c : text.toCharArray()) {

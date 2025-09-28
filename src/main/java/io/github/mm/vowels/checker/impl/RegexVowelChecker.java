@@ -8,6 +8,10 @@ public class RegexVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         return VOWEL_PATTERN.matcher(text).find();
     }
 }

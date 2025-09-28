@@ -7,6 +7,10 @@ public class RegexReplaceVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         var withoutVowels = text.replaceAll(VOWELS_MATCH, "");
         return withoutVowels.length() != text.length();
     }

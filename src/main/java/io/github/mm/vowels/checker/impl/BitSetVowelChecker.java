@@ -21,6 +21,10 @@ public class BitSetVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         for (var i = 0; i < text.length(); i++) {
             if (VOWELS.get(text.charAt(i))) {
                 return true;

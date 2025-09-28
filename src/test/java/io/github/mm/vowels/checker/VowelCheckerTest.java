@@ -1,6 +1,7 @@
 package io.github.mm.vowels.checker;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.mm.vowels.checker.impl.*;
 import java.util.List;
@@ -111,6 +112,41 @@ class VowelCheckerTest {
     void shouldHandleSingleConsonants(VowelChecker checker) {
         for (var consonant : NON_VOWELS.toCharArray()) {
             assertFalse(checker.hasVowels(String.valueOf(consonant)));
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("vowelCheckerProvider")
+    void shouldHandleNullInput(VowelChecker checker) {
+        assertFalse(
+                checker.hasVowels(null),
+                String.format(
+                        "%s failed to handle null input correctly",
+                        checker.getClass().getSimpleName()));
+    }
+
+    @ParameterizedTest
+    @MethodSource("vowelCheckerProvider")
+    void shouldHandleVeryLargeString(VowelChecker checker) {
+        // Create a 1MB string without vowels, then add one vowel
+        var sb = new StringBuilder(1024 * 1024);
+        sb.append("x".repeat(1024 * 1024 - 1));
+        var noVowels = sb.toString();
+        var withVowel = sb.append('a').toString();
+
+        try {
+            assertFalse(
+                    checker.hasVowels(noVowels),
+                    String.format(
+                            "%s incorrectly detected vowels in large consonant-only string",
+                            checker.getClass().getSimpleName()));
+            assertTrue(
+                    checker.hasVowels(withVowel),
+                    String.format(
+                            "%s failed to detect vowel in large string",
+                            checker.getClass().getSimpleName()));
+        } catch (StackOverflowError | OutOfMemoryError e) {
+            assertInstanceOf(RecursionVowelChecker.class, checker);
         }
     }
 }

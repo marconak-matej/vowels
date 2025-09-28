@@ -7,6 +7,9 @@ public class AnyMatchVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
         return text.chars().anyMatch(c -> VOWELS.indexOf(c) != -1);
     }
 }

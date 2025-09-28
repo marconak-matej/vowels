@@ -7,7 +7,7 @@ public class RecursionVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
-        if (text == null) {
+        if (text == null || text.trim().isEmpty()) {
             return false;
         }
 

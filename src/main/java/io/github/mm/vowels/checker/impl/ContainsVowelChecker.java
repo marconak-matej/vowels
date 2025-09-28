@@ -7,6 +7,10 @@ public class ContainsVowelChecker implements VowelChecker {
 
     @Override
     public boolean hasVowels(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+
         for (var vowel : VOWELS.toCharArray()) {
             if (text.contains(String.valueOf(vowel))) {
                 return true;
